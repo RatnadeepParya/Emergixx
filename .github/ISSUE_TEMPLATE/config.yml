@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Emergixx Emergency Security Disclosure
+    url: https://github.com/RatnadeepParya/Emergixx/security/advisories/new
+    about: Privately report a security vulnerability or cryptographic flaw.
+  - name: Emergixx Disaster Response Discussions
+    url: https://github.com/RatnadeepParya/Emergixx/discussions
+    about: Discuss field deployments, disaster scenarios, and community testbeds.

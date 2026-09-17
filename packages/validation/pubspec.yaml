@@ -1,0 +1,13 @@
+name: emergixx_validation
+description: Replay protection, nonce caches, and packet integrity validation for Emergixx.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  emergixx_models:
+    path: ../models
+  emergixx_protocol:
+    path: ../protocol

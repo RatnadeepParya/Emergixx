@@ -1,0 +1,27 @@
+{
+  "name": "emergixx-command-center",
+  "version": "1.0.0",
+  "description": "Emergixx Emergency Command Center - Tactical web portal for first responder dispatch, incident triage, and real-time mesh monitoring.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "emergency",
+    "disaster-response",
+    "command-center",
+    "leaflet",
+    "offline-first",
+    "mesh"
+  ],
+  "author": "Emergixx Team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0"
+  }
+}

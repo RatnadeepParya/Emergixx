@@ -1,0 +1,19 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    "presence": {
+      "$deviceId": {
+        ".write": "auth != null && (auth.uid == $deviceId || !data.exists())"
+      }
+    },
+    "live_emergencies": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "responder_locations": {
+      "$responderId": {
+        ".write": "auth != null && auth.uid == $responderId"
+      }
+    }
+  }
+}

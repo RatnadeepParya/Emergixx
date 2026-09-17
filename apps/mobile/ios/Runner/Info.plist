@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Emergixx</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Emergixx</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+
+	<!-- ================================================================= -->
+	<!-- Emergixx iOS Permission & Background Modes Specification          -->
+	<!-- ================================================================= -->
+
+	<!-- Bluetooth Permissions -->
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Emergixx uses Bluetooth Low Energy to discover nearby survivor devices and relay life-safety emergency messages when all internet and cellular services are unavailable.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Emergixx advertises an anonymous emergency beacon so search-and-rescue responders can locate your device in crisis zones.</string>
+
+	<!-- Location Usage -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Emergixx attaches your precise coordinates to emergency SOS distress broadcasts so first responders can locate you.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Emergixx uses background location during active SOS broadcasts to update search-and-rescue teams if you are moving or evacuating.</string>
+
+	<!-- Local Network Access (Wi-Fi P2P & Multicast Mesh) -->
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Emergixx communicates across local Wi-Fi networks and ad-hoc routers when cellular towers are down.</string>
+
+	<!-- Background Execution Modes -->
+	<!-- Note on Apple iOS Platform Constraints: Apple restricts continuous background BLE scanning -->
+	<!-- and advertising. When backgrounded on iOS, Emergixx relies on state restoration, GATT connection -->
+	<!-- handshakes, and periodic duty cycling to maximize battery life and comply with iOS limits. -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>bluetooth-central</string>
+		<string>bluetooth-peripheral</string>
+		<string>location</string>
+		<string>processing</string>
+		<string>fetch</string>
+	</array>
+
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+</dict>
+</plist>

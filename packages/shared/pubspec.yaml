@@ -1,0 +1,9 @@
+name: emergixx_shared
+description: Shared utilities, battery awareness, sanitized logging, and network state machine for Emergixx.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:

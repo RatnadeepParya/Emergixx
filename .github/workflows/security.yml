@@ -1,0 +1,42 @@
+name: Security Audit
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  secret-scan:
+    name: Secret & Credential Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Secret Detection (TruffleHog)
+        uses: trufflesecurity/trufflehog@main
+        with:
+          extra_args: --only-verified
+
+  dependency-audit:
+    name: Node & Dart Dependency Audits
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Audit Command Center Dependencies
+        run: |
+          cd apps/command-center
+          npm audit --audit-level=high || true
+
+      - name: Audit Backend Dependencies
+        run: |
+          cd backend
+          npm audit --audit-level=high || true

@@ -1,0 +1,83 @@
+<!-- Key Metric KPI Cards -->
+<div class="stats-grid">
+  <div class="stat-card critical">
+    <div class="stat-label">Active SOS Alerts</div>
+    <div class="stat-value" id="kpi-active-sos"><%= stats.activeSos %></div>
+    <div class="stat-caption">Requires immediate responder triage</div>
+  </div>
+
+  <div class="stat-card info">
+    <div class="stat-label">Deployed Field Units</div>
+    <div class="stat-value"><%= stats.deployedResponders %> / <%= stats.totalResponders %></div>
+    <div class="stat-caption">Active on mesh radio frequencies</div>
+  </div>
+
+  <div class="stat-card safe">
+    <div class="stat-label">Survivors Accounted For</div>
+    <div class="stat-value"><%= stats.survivorsSafe %></div>
+    <div class="stat-caption">Verified via offline safety check-ins</div>
+  </div>
+
+  <div class="stat-card warning">
+    <div class="stat-label">Mesh Packets Relayed</div>
+    <div class="stat-value"><%= stats.packetsRelayed %></div>
+    <div class="stat-caption">Store-and-forward peer hops: 4.8 avg</div>
+  </div>
+</div>
+
+<!-- Active Incidents Triage Table -->
+<div class="data-card">
+  <div class="data-card-header">
+    <div class="data-card-title">🚨 Active Distress & Incident Triage</div>
+    <a href="/incidents" class="btn btn-outline" style="padding: 4px 12px; font-size: 12px;">View All</a>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Severity</th>
+          <th>Incident Title</th>
+          <th>Location / Node</th>
+          <th>Hops</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% incidents.slice(0, 5).forEach(function(inc) { %>
+          <tr id="row-<%= inc.incidentId %>">
+            <td>
+              <span class="badge <%= inc.severity === 'CRITICAL' ? 'badge-critical' : (inc.severity === 'HIGH' ? 'badge-warning' : 'badge-info') %>">
+                <%= inc.severity %>
+              </span>
+            </td>
+            <td>
+              <b><%= inc.title %></b>
+              <div style="font-size: 11px; color: var(--text-secondary);"><%= inc.description %></div>
+            </td>
+            <td>
+              <span class="code-mono"><%= inc.latitude.toFixed(4) %>, <%= inc.longitude.toFixed(4) %></span>
+              <div style="font-size: 11px; color: var(--text-muted);">Node: <%= inc.reportedByDeviceId %></div>
+            </td>
+            <td><b><%= inc.relayHopCount %></b> hops</td>
+            <td><%= new Date(inc.timestamp).toLocaleTimeString() %></td>
+            <td class="status-cell">
+              <span class="badge <%= inc.status === 'RESOLVED' ? 'badge-safe' : 'badge-warning' %>"><%= inc.status %></span>
+            </td>
+            <td>
+              <% if (inc.status !== 'RESOLVED') { %>
+                <button class="btn btn-primary" style="padding: 4px 10px; font-size: 11px;" onclick="openDispatchModal('<%= inc.incidentId %>', '<%= inc.title %>')">
+                  Dispatch
+                </button>
+              <% } else { %>
+                <span style="color: var(--color-safe); font-size: 12px; font-weight: bold;">✓ Resolved</span>
+              <% } %>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+</div>

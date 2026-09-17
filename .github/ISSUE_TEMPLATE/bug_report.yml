@@ -1,0 +1,70 @@
+name: "Bug Report"
+description: "File a reproducible bug or failure in Emergixx"
+title: "[BUG]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue with Emergixx. Emergency communication systems require zero tolerance for unhandled failures.
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component Affected
+      description: Which part of Emergixx is experiencing the issue?
+      options:
+        - Mobile App (Flutter)
+        - P2P Mesh Networking (BLE / Wi-Fi Direct)
+        - Protocol & Message Envelope (EMERGIXX/1)
+        - Cryptography & Identity (Ed25519 / X25519)
+        - Store-and-Forward & Deduplication
+        - Cloud Sync & Firebase
+        - Emergency Command Center (Web)
+        - Backend REST API / Cloud Functions
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Operating System / Platform
+      options:
+        - Android 14+
+        - Android 12-13
+        - iOS 17+
+        - iOS 16
+        - Web Browser (Command Center)
+        - Server / Node.js
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen according to the Emergixx specification?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened? (Include crash logs, stack traces, or observed error codes).
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Step-by-step reproduction steps.
+      placeholder: |
+        1. Turn off Wi-Fi and Cellular data on Device A and Device B.
+        2. Initiate emergency SOS broadcast on Device A.
+        3. Observe packet reception on Device B.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have verified that no sensitive credentials, private keys, or actual emergency locations are included in this report.
+          required: true

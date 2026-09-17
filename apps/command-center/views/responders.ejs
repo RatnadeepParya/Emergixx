@@ -1,0 +1,62 @@
+<div class="data-card">
+  <div class="data-card-header">
+    <div class="data-card-title">🚑 Field Response Units & Search Teams</div>
+    <button class="btn btn-outline" style="padding: 4px 10px; font-size: 11px;">+ Register Unit</button>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Callsign / Unit</th>
+          <th>Specialization</th>
+          <th>Current Status</th>
+          <th>Battery</th>
+          <th>Coordinates</th>
+          <th>Assigned Incident</th>
+          <th>Primary Radio</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% responders.forEach(function(resp) { %>
+          <tr>
+            <td>
+              <b style="font-size: 14px;"><%= resp.callsign %></b>
+              <div style="font-size: 11px; color: var(--text-muted); font-family: monospace;"><%= resp.responderId %></div>
+            </td>
+            <td><%= resp.role %></td>
+            <td>
+              <span class="badge <%= resp.status === 'RESPONDING' ? 'badge-critical' : (resp.status === 'ON_DUTY' ? 'badge-safe' : 'badge-info') %>">
+                <%= resp.status %>
+              </span>
+            </td>
+            <td>
+              <b style="color: <%= resp.batteryLevel > 30 ? 'var(--color-safe)' : 'var(--color-critical)' %>">
+                <%= resp.batteryLevel %>%
+              </b>
+            </td>
+            <td>
+              <span class="code-mono"><%= resp.latitude.toFixed(4) %>, <%= resp.longitude.toFixed(4) %></span>
+            </td>
+            <td>
+              <% if (resp.assignedIncidentId) { %>
+                <a href="/incidents#row-<%= resp.assignedIncidentId %>" style="color: var(--color-info); text-decoration: none; font-weight: bold;">
+                  🚨 <%= resp.assignedIncidentId %>
+                </a>
+              <% } else { %>
+                <span style="color: var(--text-muted); font-size: 11px;">Available for dispatch</span>
+              <% } %>
+            </td>
+            <td><%= resp.transport.toUpperCase() %></td>
+            <td>
+              <button class="btn btn-outline" style="padding: 4px 8px; font-size: 11px;" onclick="alert('Sending mesh radio ping to unit <%= resp.callsign %>...')">
+                📡 Radio Ping
+              </button>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+</div>

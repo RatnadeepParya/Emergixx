@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "emergixx-mesh-prod",
+    "staging": "emergixx-mesh-staging",
+    "development": "emergixx-mesh-dev"
+  }
+}

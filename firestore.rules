@@ -1,0 +1,131 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for authentication and RBAC
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function hasRole(role) {
+      return isSignedIn() && (
+        request.auth.token.role == role || 
+        getUserData().role == role
+      );
+    }
+
+    function isResponder() {
+      return hasRole('responder') || hasRole('admin');
+    }
+
+    function isAdmin() {
+      return hasRole('admin');
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create, update: if isOwner(userId);
+      allow delete: if isAdmin();
+    }
+
+    // Cryptographic Device Registrations (Public Keys only, no private keys)
+    match /devices/{deviceId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && (
+        request.resource.data.ownerUid == request.auth.uid ||
+        !('ownerUid' in request.resource.data)
+      );
+      allow delete: if isAdmin();
+    }
+
+    // Groups & Group Members
+    match /groups/{groupId} {
+      allow read: if isSignedIn() && (
+        request.auth.uid in resource.data.memberUids ||
+        isResponder()
+      );
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && (
+        resource.data.adminUid == request.auth.uid ||
+        isAdmin()
+      );
+      allow delete: if isSignedIn() && resource.data.adminUid == request.auth.uid;
+
+      match /members/{memberId} {
+        allow read: if isSignedIn() && (
+          get(/databases/$(database)/documents/groups/$(groupId)).data.memberUids.hasAny([request.auth.uid]) ||
+          isResponder()
+        );
+        allow write: if isSignedIn() && (
+          get(/databases/$(database)/documents/groups/$(groupId)).data.adminUid == request.auth.uid ||
+          request.auth.uid == memberId
+        );
+      }
+    }
+
+    // Cloud-synchronized Messages (E2EE ciphertext only)
+    match /messages/{messageId} {
+      allow read: if isSignedIn() && (
+        resource.data.senderDeviceId == request.auth.uid ||
+        resource.data.recipientDeviceId == request.auth.uid ||
+        resource.data.recipientDeviceId == 'BROADCAST_ALL' ||
+        isResponder()
+      );
+      allow create: if isSignedIn();
+      allow update, delete: if isAdmin();
+    }
+
+    // Emergency SOS Records
+    match /emergencies/{emergencyId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isResponder() || (
+        resource.data.reporterUid == request.auth.uid
+      );
+      allow delete: if isAdmin();
+    }
+
+    // Search & Rescue Incidents (Command Center)
+    match /incidents/{incidentId} {
+      allow read: if isResponder();
+      allow create, update: if isResponder();
+      allow delete: if isAdmin();
+    }
+
+    // Responders Directory
+    match /responders/{responderId} {
+      allow read: if isResponder();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Safety Check-ins
+    match /checkins/{checkinId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isOwner(resource.data.userId);
+      allow delete: if isAdmin();
+    }
+
+    // Administrative Audit Logs (Append-only by backend/admin, read by admin)
+    match /auditLogs/{auditId} {
+      allow read: if isAdmin();
+      allow create: if isResponder();
+      allow update, delete: if false; // Immutable audit log
+    }
+
+    // System Configuration
+    match /systemConfig/{configId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+  }
+}

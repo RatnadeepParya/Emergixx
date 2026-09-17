@@ -1,0 +1,19 @@
+name: emergixx_tests
+description: Test suites and mesh network simulation for Emergixx.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  emergixx_models:
+    path: ../packages/models
+  emergixx_crypto:
+    path: ../packages/crypto
+  emergixx_protocol:
+    path: ../packages/protocol
+  emergixx_validation:
+    path: ../packages/validation
+  emergixx_shared:
+    path: ../packages/shared

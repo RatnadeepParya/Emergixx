@@ -1,0 +1,37 @@
+name: "Emergency Protocol Proposal (RFC)"
+description: "Propose changes to EMERGIXX/1 packet wire format, routing, encryption, or transport"
+title: "[RFC-PROTOCOL]: "
+labels: ["protocol", "rfc", "cryptography"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for architectural changes to the P2P wire protocol, opportunistic routing, store-and-forward rules, or cryptographic key exchange.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Executive Summary
+      description: Concise overview of the protocol enhancement.
+    validations:
+      required: true
+  - type: textarea
+    id: wire_format
+    attributes:
+      label: Wire Format & Payload Specification
+      description: Detail field additions, byte packing, or encryption metadata changes.
+    validations:
+      required: true
+  - type: textarea
+    id: backwards_compatibility
+    attributes:
+      label: Backward Compatibility & Version Negotiation
+      description: How will EMERGIXX/1 nodes interoperate with this change?
+    validations:
+      required: true
+  - type: textarea
+    id: security_analysis
+    attributes:
+      label: Security & Replay Impact
+      description: Evaluate resistance to spoofing, MITM, amplification, and denial of service.
+    validations:
+      required: true

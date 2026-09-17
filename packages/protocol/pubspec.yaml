@@ -1,0 +1,13 @@
+name: emergixx_protocol
+description: EMERGIXX/1 wire protocol, packet codecs, priority queues, deduplication, and store-and-forward mesh routing.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  emergixx_models:
+    path: ../models
+  emergixx_crypto:
+    path: ../crypto

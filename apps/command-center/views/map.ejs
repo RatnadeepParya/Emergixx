@@ -1,0 +1,17 @@
+<div style="display: flex; gap: 12px; margin-bottom: 12px; align-items: center;">
+  <span style="font-size: 12px; font-weight: bold; color: var(--text-secondary);">TACTICAL LAYERS:</span>
+  <button class="btn btn-outline" style="padding: 4px 10px; font-size: 11px;">
+    🔴 Active SOS Beacons (<%= incidents.filter(i => i.severity === 'CRITICAL' && i.status !== 'RESOLVED').length %>)
+  </button>
+  <button class="btn btn-outline" style="padding: 4px 10px; font-size: 11px;">
+    🚑 Deployed Responders (<%= responders.length %>)
+  </button>
+  <button class="btn btn-outline" style="padding: 4px 10px; font-size: 11px;">
+    🟢 Safe Check-in Clusters
+  </button>
+  <button class="btn btn-outline" style="padding: 4px 10px; font-size: 11px;">
+    ⛺ Designated Emergency Shelters
+  </button>
+</div>
+
+<div id="leaflet-map"></div>

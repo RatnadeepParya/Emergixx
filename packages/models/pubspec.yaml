@@ -1,0 +1,9 @@
+name: emergixx_models
+description: Domain data models and schemas for the Emergixx offline-first emergency platform.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:

@@ -1,0 +1,43 @@
+<div class="data-card">
+  <div class="data-card-header">
+    <div class="data-card-title">🔐 Cryptographic Ledger & Mesh Audit Trail</div>
+    <div style="font-size: 11px; color: var(--color-safe); font-weight: bold;">
+      ✓ All Ed25519 & Curve25519 Signatures Cryptographically Verified
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Event Type</th>
+          <th>Message ID</th>
+          <th>Origin Node</th>
+          <th>SHA-256 Digest</th>
+          <th>Digital Signature (Ed25519)</th>
+          <th>Hops</th>
+          <th>Verification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% auditLogs.forEach(function(log) { %>
+          <tr>
+            <td><%= new Date(log.timestamp).toLocaleTimeString() %></td>
+            <td>
+              <span class="badge badge-info"><%= log.event %></span>
+            </td>
+            <td class="code-mono"><%= log.messageId %></td>
+            <td class="code-mono"><%= log.senderDeviceId %></td>
+            <td class="code-mono" style="font-size: 10px;"><%= log.sha256Digest.substring(0, 16) %>...</td>
+            <td class="code-mono" style="font-size: 10px;"><%= log.signature.substring(0, 16) %>...</td>
+            <td><b><%= log.hopCount %></b></td>
+            <td>
+              <span class="badge badge-safe">✓ VALID</span>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+</div>

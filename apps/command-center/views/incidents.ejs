@@ -1,0 +1,81 @@
+<div class="data-card">
+  <div class="data-card-header">
+    <div class="data-card-title">🚨 Incident Command & Dispatch Portal</div>
+    <div style="display: flex; gap: 8px;">
+      <button class="btn btn-outline" style="padding: 4px 10px; font-size: 11px;">Filter: All Severities</button>
+      <button class="btn btn-outline" style="padding: 4px 10px; font-size: 11px;">Filter: Active Only</button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Severity</th>
+          <th>Incident Details</th>
+          <th>GPS Coordinates</th>
+          <th>Reported By</th>
+          <th>Relay Path</th>
+          <th>Assigned Unit</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% incidents.forEach(function(inc) { %>
+          <tr id="row-<%= inc.incidentId %>">
+            <td class="code-mono"><%= inc.incidentId %></td>
+            <td>
+              <span class="badge <%= inc.severity === 'CRITICAL' ? 'badge-critical' : (inc.severity === 'HIGH' ? 'badge-warning' : 'badge-info') %>">
+                <%= inc.severity %>
+              </span>
+            </td>
+            <td>
+              <b style="font-size: 14px;"><%= inc.title %></b>
+              <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">
+                <%= inc.description %>
+              </div>
+              <% if (inc.notes) { %>
+                <div style="font-size: 11px; color: var(--color-warning); margin-top: 4px;">
+                  <b>Note:</b> <%= inc.notes %>
+                </div>
+              <% } %>
+            </td>
+            <td>
+              <span class="code-mono"><%= inc.latitude.toFixed(4) %>, <%= inc.longitude.toFixed(4) %></span>
+            </td>
+            <td class="code-mono"><%= inc.reportedByDeviceId %></td>
+            <td><b><%= inc.relayHopCount %></b> hops</td>
+            <td>
+              <% if (inc.assignedResponderId) { %>
+                <span class="badge badge-safe">🚑 <%= inc.assignedResponderId %></span>
+              <% } else { %>
+                <span style="color: var(--text-muted); font-size: 11px;">Unassigned</span>
+              <% } %>
+            </td>
+            <td class="status-cell">
+              <span class="badge <%= inc.status === 'RESOLVED' ? 'badge-safe' : (inc.status === 'DISPATCHED' ? 'badge-info' : 'badge-warning') %>">
+                <%= inc.status %>
+              </span>
+            </td>
+            <td>
+              <div style="display: flex; gap: 6px;">
+                <% if (inc.status !== 'RESOLVED') { %>
+                  <button class="btn btn-primary" style="padding: 4px 8px; font-size: 11px;" onclick="openDispatchModal('<%= inc.incidentId %>', '<%= inc.title %>')">
+                    Dispatch
+                  </button>
+                  <button class="btn btn-outline" style="padding: 4px 8px; font-size: 11px; color: var(--color-safe);" onclick="resolveIncident('<%= inc.incidentId %>')">
+                    Resolve
+                  </button>
+                <% } else { %>
+                  <span style="color: var(--color-safe); font-size: 12px; font-weight: bold;">Closed</span>
+                <% } %>
+              </div>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+</div>

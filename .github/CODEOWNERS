@@ -1,0 +1,33 @@
+# Emergixx Codeowners
+# Defines code ownership across platforms, packages, security, and protocols.
+
+# Global fallback maintainers
+* @RatnadeepParya
+
+# Core Protocol & Networking
+/packages/protocol/ @RatnadeepParya
+/packages/crypto/ @RatnadeepParya
+/packages/models/ @RatnadeepParya
+/packages/validation/ @RatnadeepParya
+/packages/shared/ @RatnadeepParya
+
+# Mobile Application (Flutter/Dart)
+/apps/mobile/ @RatnadeepParya
+/apps/mobile/android/ @RatnadeepParya
+/apps/mobile/ios/ @RatnadeepParya
+
+# Command Center & Backend API
+/apps/command-center/ @RatnadeepParya
+/backend/ @RatnadeepParya
+/functions/ @RatnadeepParya
+
+# Infrastructure, Firebase & Cloud Rules
+/firebase.json @RatnadeepParya
+/firestore.rules @RatnadeepParya
+/database.rules.json @RatnadeepParya
+/storage.rules @RatnadeepParya
+/infrastructure/ @RatnadeepParya
+
+# CI/CD and Security
+/.github/ @RatnadeepParya
+/SECURITY.md @RatnadeepParya
