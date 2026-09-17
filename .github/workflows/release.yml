@@ -18,6 +18,7 @@ jobs:
 
       - name: Verify Package Integrity
         run: |
+          dart pub get --directory=packages/models
           dart pub get --directory=packages/protocol
           dart pub get --directory=packages/crypto
 

@@ -19,11 +19,18 @@ jobs:
         with:
           sdk: stable
 
+      - name: Resolve Dependencies
+        run: |
+          for dir in packages/models packages/crypto packages/protocol packages/validation packages/shared tests; do
+            echo "Resolving dependencies in $dir..."
+            dart pub get --directory=$dir
+          done
+
       - name: Run Dart Unit & Security Tests
         run: |
-          dart test tests/protocol_test.dart
-          dart test tests/crypto_test.dart
-          dart test tests/store_and_forward_test.dart
+          dart run tests/protocol_test.dart
+          dart run tests/crypto_test.dart
+          dart run tests/store_and_forward_test.dart
 
       - name: Run 10-Node & 50-Node Mesh Simulation
         run: |
@@ -45,13 +52,13 @@ jobs:
       - name: Install & Test Command Center
         run: |
           cd apps/command-center
-          npm ci --legacy-peer-deps || npm install
+          npm install --no-audit
           npm test
 
       - name: Install & Test Backend API
         run: |
           cd backend
-          npm ci --legacy-peer-deps || npm install
+          npm install --no-audit
           npm test
 
   static-analysis:
@@ -63,11 +70,20 @@ jobs:
 
       - name: Setup Dart SDK
         uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Resolve Dependencies
+        run: |
+          for dir in packages/models packages/crypto packages/protocol packages/validation packages/shared; do
+            echo "Resolving dependencies in $dir..."
+            dart pub get --directory=$dir
+          done
 
       - name: Analyze Core Packages
         run: |
-          dart analyze packages/protocol
-          dart analyze packages/crypto
           dart analyze packages/models
+          dart analyze packages/crypto
+          dart analyze packages/protocol
           dart analyze packages/validation
           dart analyze packages/shared
